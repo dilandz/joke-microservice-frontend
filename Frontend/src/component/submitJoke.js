@@ -3,6 +3,7 @@ import axios from "axios";
 
 function SubmitJoke() {
   const [types, setTypes] = useState([]);
+  const selectType = ["", ...types];
 
   const getJokeTypes = async () => {
     await axios
@@ -37,6 +38,7 @@ function SubmitJoke() {
         alert("New Joke is saved!!");
         setJoke("");
         setType("");
+        window.location.reload();
       })
       .catch((err) => {
         alert(err);
@@ -78,9 +80,9 @@ function SubmitJoke() {
                     setType(e.target.value);
                   }}
                   id="countries"
-                  className="mb-4 bg-gray-50 border  text-md rounded-lg  block w-full p-2.5  dark:border-gray-600"
+                  className="mb-4 bg-gray-50 border  text-md rounded-lg  block w-full p-1.5  dark:border-gray-600"
                 >
-                  {types.map((data) => (
+                  {selectType.map((data) => (
                     <option key={data.idjokeTypes}>{data.type}</option>
                   ))}
                 </select>

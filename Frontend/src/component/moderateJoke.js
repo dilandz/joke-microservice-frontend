@@ -21,7 +21,7 @@ function ModerateJoke() {
     getJokes();
   }, [jokeToMySql, typeToMySql]);
 
-  const DeleteJoke = async (id) => {
+  const deleteJoke = async (id) => {
     await axios
       .delete(`http://localhost:3002/joke/deleteJoke/${id}`)
       .then(console.log("deleted"));
@@ -29,27 +29,22 @@ function ModerateJoke() {
     setTypeToMySql();
   };
 
-  // TODO when data is save to mongodb and display in moderate at first try it save empyt values
   const handleAcceptButton = async (joke, type) => {
     const newJokes = {
-      joke: jokeToMySql,
-      type: typeToMySql,
+      joke: joke,
+      type: type,
     };
-
+    console.log(newJokes);
     //Posting data to MySQL
     await axios
       .post("http://localhost:3002/joke/postJoke", newJokes)
-      .then((res) => {
+      .then(() => {
         alert("New Joke is saved to MySQL!!");
         console.log("saved");
-        setJokeToMySql(joke);
-        setTypeToMySql(type);
       })
       .catch((err) => {
         alert(err);
         console.log("not saved");
-      }).finally(()=>{
-        console.log("FINALLY");
       });
   };
 
@@ -75,15 +70,14 @@ function ModerateJoke() {
                 <button
                   onClick={() => {
                     handleAcceptButton(data.joke, data.type);
-
-                    //DeleteJoke(data._id);
+                    deleteJoke(data._id);
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Accept
                 </button>
                 <button
-                  onClick={() => DeleteJoke(data._id)}
+                  onClick={() => deleteJoke(data._id)}
                   className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
                 >
                   Remove
