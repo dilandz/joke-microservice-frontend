@@ -27,6 +27,8 @@ function ModerateJoke() {
       .then(console.log("deleted"));
     setJokeToMySql();
     setTypeToMySql();
+
+    window.location.reload();
   };
 
   const handleAcceptButton = async (joke, type) => {

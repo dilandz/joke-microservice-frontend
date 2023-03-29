@@ -4,6 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditJoke() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [joke, setJoke] = useState("");
+  const [type, setType] = useState("");
+  const [types, setTypes] = useState([]);
 
   //Get jokes based on selected id to the edit
   useEffect(() => {
@@ -19,9 +23,7 @@ function EditJoke() {
       });
   }, [id]);
 
-  const navigate = useNavigate();
-  const [joke, setJoke] = useState("");
-  const [type, setType] = useState("");
+  
 
   function UpdateJoke(e) {
     e.preventDefault();
@@ -63,7 +65,7 @@ function EditJoke() {
       });
   };
 
-  const [types, setTypes] = useState([]);
+  
 
   const getJokeTypes = async () => {
     await axios

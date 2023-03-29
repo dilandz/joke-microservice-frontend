@@ -2,27 +2,49 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function DeliverJoke() {
-  const [joke, setJoke] = useState("");
-  //const [type, setType] = useState("");
-
+  const [joke, setJoke] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [typeSearch, setTypeSearch] = useState("");
+  const selectType = ["", ...types];
 
   const getJoke = async () => {
+    console.log(typeSearch);
+
     await axios
-      .get("http://localhost:3001/joke/getAll")
+      .get("http://localhost:3001/joke/getRandom", {
+        params: {
+          type: typeSearch,
+        },
+      })
       .then((res) => {
         setJoke(res.data);
-        
+        console.log(res.data);
+        console.log("axios call working");
       })
       .catch((err) => {
         alert(err.message);
-       
+      });
+  };
+
+  const getJokeTypes = async () => {
+    await axios
+      .get("http://localhost:3001/joke/getAllType")
+      .then((res) => {
+        setTypes(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
       });
   };
 
   useEffect(() => {
-    getJoke();
+    getJokeTypes();
   }, []);
-   
+
+  const handleGenerate = () => {
+    getJoke();
+    console.log(joke);
+  };
 
   return (
     <div>
@@ -33,28 +55,30 @@ function DeliverJoke() {
               Generate Jokes
             </h1>
           </div>
-          
 
           <div className="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
-            <form>
-            {joke && (    
-              <div>
-              {joke.map((data)=>(
-                
-                <h2
-                  className="mb-2 "  
-                > {data.joke}</h2>
-          
+            <label>Select type</label>
+
+            <select
+              onChange={(e) => {
+                setTypeSearch(e.target.value);
+              }}
+              id="countries"
+              className="mb-4 bg-gray-50 border  text-md rounded-lg  block w-full p-1.5  dark:border-gray-600"
+            >
+              {selectType.map((data) => (
+                <option key={data.idjokeTypes}>{data.type}</option>
               ))}
-                <button
-                  className=" mb-4 px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                  onClick={getJoke}
-                >
-                  Generate
-                </button>
-              </div>
-               )}
-            </form>
+            </select>
+            {joke.map((data) => (
+              <div>{data.joke}</div>
+            ))}
+            <button
+              className=" mb-4 px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
+              onClick={handleGenerate}
+            >
+              Generate
+            </button>
           </div>
         </div>
       </div>
