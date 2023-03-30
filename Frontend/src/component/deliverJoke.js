@@ -11,10 +11,10 @@ function DeliverJoke() {
     console.log(typeSearch);
 
     await axios
-      .get("http://localhost:3001/joke/getRandom", {
+      .get("https://localhost:3001/joke/getRandom", {
         params: {
           type: typeSearch,
-        },
+        }
       })
       .then((res) => {
         setJoke(res.data);
@@ -28,7 +28,7 @@ function DeliverJoke() {
 
   const getJokeTypes = async () => {
     await axios
-      .get("http://localhost:3001/joke/getAllType")
+      .get("https://localhost:3001/joke/getAllType")
       .then((res) => {
         setTypes(res.data);
       })

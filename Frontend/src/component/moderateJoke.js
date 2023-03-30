@@ -11,7 +11,7 @@ function ModerateJoke() {
   useEffect(() => {
     const getJokes = async () => {
       await axios
-        .get("http://localhost:3002/joke/getJokes")
+        .get("https://localhost:3002/joke/getJokes")
         .then((res) => {
           setJokes(res.data.reverse());
         })
@@ -24,7 +24,7 @@ function ModerateJoke() {
 
   const deleteJoke = async (id) => {
     await axios
-      .delete(`http://localhost:3002/joke/deleteJoke/${id}`)
+      .delete(`https://localhost:3002/joke/deleteJoke/${id}`)
       .then(console.log("deleted"));
     setJokeToMySql();
     setTypeToMySql();
@@ -40,7 +40,7 @@ function ModerateJoke() {
     console.log(newJokes);
     //Posting data to MySQL
     await axios
-      .post("http://localhost:3002/joke/postJoke", newJokes)
+      .post("https://localhost:3002/joke/postJoke", newJokes)
       .then(() => {
         alert("New Joke is saved to MySQL!!");
         console.log("saved");
@@ -57,12 +57,18 @@ function ModerateJoke() {
 
   return (
     <div className="relative overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
+      <div className="flex flex-row items-center gap-2">
       <button
         className="mt-4 mb-4 ml-6 mr-6 px-5 py-2 text-sm font-semibold rounded-md shadow-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
         onClick={handleViewList}
       >
         View Moderated Joke
       </button>
+      <p>Open API Doc:</p>
+      <a href="https://localhost:3003/doc/#/" className="hover:text-blue-600"> Submit Joke</a>
+      <a href="https://localhost:3001/doc/#/" className="hover:text-blue-600"> Deliver Joke</a>
+      <a href="https://localhost:3002/doc/#/" className="hover:text-blue-600"> Moderate Joke</a>
+      </div>
       <div className="m-5 h-screen  ">
         <table className="w-full text-sm text-center dark:bg-gray-100">
           <thead className=" text-lg text-whiteuppercase bg-gray-800 dark:bg-gray-700 dark:text-white">

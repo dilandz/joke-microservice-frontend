@@ -9,7 +9,7 @@ function SubmitJoke() {
 
   const getJokeTypes = async () => {
     await axios
-      .get("http://localhost:3001/joke/getAllType")
+      .get("https://localhost:3001/joke/getAllType")
       .then((res) => {
         setTypes(res.data);
       })
@@ -32,7 +32,7 @@ function SubmitJoke() {
 
     //Posting data to backend
     axios
-      .post("http://localhost:3003/joke/post", newJokes)
+      .post("https://localhost:3003/joke/post", newJokes)
       .then(() => {
         alert("New Joke is saved!!");
         setJoke("");

@@ -17,7 +17,7 @@ function Login() {
     console.log(loginDetail);
 
     await axios
-      .post("http://localhost:3002/joke/adminLogin", loginDetail)
+      .post("https://localhost:3002/joke/adminLogin", loginDetail)
       .then((res) => {
         const { token } = res.data;
         localStorage.setItem("token", token);

@@ -12,7 +12,7 @@ function EditJoke() {
   //Get jokes based on selected id to the edit
   useEffect(() => {
     axios
-      .get(`http://localhost:3002/joke/getJokeById/${id}`)
+      .get(`https://localhost:3002/joke/getJokeById/${id}`)
       .then((res) => {
         setJoke(res.data.joke);
         setType(res.data.type);
@@ -34,7 +34,7 @@ function EditJoke() {
     };
 
     axios
-      .patch(`http://localhost:3002/joke/updateJokeByID/${id}`, jokeData)
+      .patch(`https://localhost:3002/joke/updateJokeByID/${id}`, jokeData)
       .then((res) => {
         navigate("/moderatejoke");
         alert("Joke is updated!!");
@@ -56,7 +56,7 @@ function EditJoke() {
 
     //Posting data to MySQL
     axios
-      .post("http://localhost:3002/joke/postJokeType", jokeType)
+      .post("https://localhost:3002/joke/postJokeType", jokeType)
       .then((res) => {
         alert("New Joke Type is saved to mongoDB!!");
       })
@@ -69,7 +69,7 @@ function EditJoke() {
 
   const getJokeTypes = async () => {
     await axios
-      .get("http://localhost:3001/joke/getAllType")
+      .get("https://localhost:3001/joke/getAllType")
       .then((res) => {
         setTypes(res.data);
       })
