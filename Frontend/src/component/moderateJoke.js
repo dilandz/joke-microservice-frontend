@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ModerateJoke() {
   const [jokes, setJokes] = useState([]);
   const [jokeToMySql, setJokeToMySql] = useState();
   const [typeToMySql, setTypeToMySql] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getJokes = async () => {
@@ -50,51 +51,63 @@ function ModerateJoke() {
       });
   };
 
-  return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Joke Type</th>
-            <th scope="col">Joke Description</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
+  const handleViewList = () => {
+    navigate("/verifiedjoke");
+  };
 
-        <tbody>
-          {jokes.map((data, index) => (
-            <tr key={data._id}>
-              <td>{index + 1}</td>
-              <td>{data.joke}</td>
-              <td>{data.type}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleAcceptButton(data.joke, data.type);
-                    deleteJoke(data._id);
-                  }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() => deleteJoke(data._id)}
-                  className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                >
-                  Remove
-                </button>
-                <Link
-                  to={`/editjoke/${data._id}`}
-                  className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                >
-                  Edit
-                </Link>
-              </td>
+  return (
+    <div className="relative overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
+      <button
+        className="mt-4 mb-4 ml-6 mr-6 px-5 py-2 text-sm font-semibold rounded-md shadow-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
+        onClick={handleViewList}
+      >
+        View Moderated Joke
+      </button>
+      <div className="m-5 h-screen  ">
+        <table className="w-full text-sm text-center dark:bg-gray-100">
+          <thead className=" text-lg text-whiteuppercase bg-gray-800 dark:bg-gray-700 dark:text-white">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Joke Description</th>
+              <th scope="col">Joke Type</th>
+              <th scope="col">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody className="text-base">
+            {jokes.map((data, index) => (
+              <tr key={data._id} className="border-cray-900 border">
+                <td>{index + 1}</td>
+                <td>{data.joke}</td>
+                <td>{data.type}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      handleAcceptButton(data.joke, data.type);
+                      deleteJoke(data._id);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 mb-2 mt-2 ml-1 mr-1 text-white font-bold py-2 px-4  border-gray-400 rounded shadow"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => deleteJoke(data._id)}
+                    className="bg-white hover:bg-gray-100 mb-2 mt-2 ml-1 mr-1 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded shadow"
+                  >
+                    Remove
+                  </button>
+                  <Link
+                    to={`/editjoke/${data._id}`}
+                    className="bg-transparent hover:bg-blue-500 mb-2 mt-2 ml-1 mr-1 text-blue-700 font-bold hover:text-white py-2.5 px-4 border border-blue-500 hover:border-transparent rounded"
+                  >
+                    Edit
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

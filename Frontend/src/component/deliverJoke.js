@@ -48,33 +48,37 @@ function DeliverJoke() {
 
   return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
-        <div className="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
-          <div className="mb-4">
-            <h1 className="font-serif text-3xl font-bold flex sm:justify-center">
+      <div className="flex flex-col items-center bg-gray-50 min-h-screen pt-6  sm:justify-center sm:pt-0">
+        <div className="w-full px-16 py-20 mt-6 lg:max-w-4xl">
+          <div className="w-full px-6 py-4 shadow dark:border dark:bg-gray-800 dark:border-gray-700 rounded-xl ring-gray-900/10">
+            <h1 className=" dark:text-white text-2xl font-bold mb-5 mt-5">
               Generate Jokes
             </h1>
-          </div>
-
-          <div className="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
-            <label>Select type</label>
+            <label className="dark:text-white text-md font-semibold mb-2">
+              Select type
+            </label>
 
             <select
               onChange={(e) => {
                 setTypeSearch(e.target.value);
               }}
               id="countries"
-              className="mb-4 bg-gray-50 border  text-md rounded-lg  block w-full p-1.5  dark:border-gray-600"
+              className="bg-gray-50 border mb-6 border-gray-300 text-gray-900 sm:text-sm rounded-lg  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             >
               {selectType.map((data) => (
                 <option key={data.idjokeTypes}>{data.type}</option>
               ))}
             </select>
-            {joke.map((data) => (
-              <div>{data.joke}</div>
-            ))}
+            <label className="dark:text-white text-md font-semibold mb-9">
+              Joke
+            </label>
+            <div className="dark:text-white text-md font-semibold">
+              {joke.map((data) => (
+                <p className="text-2xl mb-2">-{data.joke}</p>
+              ))}
+            </div>
             <button
-              className=" mb-4 px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
+              className=" mt-4 mb-4 px-6 py-2 text-sm font-semibold rounded-md shadow-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
               onClick={handleGenerate}
             >
               Generate
