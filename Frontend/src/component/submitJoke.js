@@ -9,7 +9,9 @@ function SubmitJoke() {
 
   const getJokeTypes = async () => {
     await axios
-      .get("https://localhost:3001/joke/getAllType")
+      .get(
+        "https://jokegenerater-deliverservice.centralindia.cloudapp.azure.com:3001/joke/getAllType"
+      )
       .then((res) => {
         setTypes(res.data);
       })
@@ -32,7 +34,10 @@ function SubmitJoke() {
 
     //Posting data to backend
     axios
-      .post("https://localhost:3003/joke/post", newJokes)
+      .post(
+        "https://jokesgenerater-submitservice.centralindia.cloudapp.azure.com:3003/joke/post",
+        newJokes
+      )
       .then(() => {
         alert("New Joke is saved!!");
         setJoke("");

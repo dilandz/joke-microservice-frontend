@@ -8,22 +8,22 @@ function EditJoke() {
   const [joke, setJoke] = useState("");
   const [type, setType] = useState("");
   const [types, setTypes] = useState([]);
+  const selectType = ["", ...types];
 
   //Get jokes based on selected id to the edit
   useEffect(() => {
     axios
-      .get(`https://localhost:3002/joke/getJokeById/${id}`)
+      .get(
+        `https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/getJokeById/${id}`
+      )
       .then((res) => {
         setJoke(res.data.joke);
         setType(res.data.type);
-        console.log("data getting");
       })
       .catch((err) => {
         alert(err.message);
       });
   }, [id]);
-
-  
 
   function UpdateJoke(e) {
     e.preventDefault();
@@ -34,29 +34,32 @@ function EditJoke() {
     };
 
     axios
-      .patch(`https://localhost:3002/joke/updateJokeByID/${id}`, jokeData)
+      .patch(
+        `https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/updateJokeByID/${id}`,
+        jokeData
+      )
       .then((res) => {
         navigate("/moderatejoke");
         alert("Joke is updated!!");
-        console.log("updated");
       })
       .catch((err) => {
         alert(err);
-        console.log("not updating");
       });
 
-      UpdateJokeType();
+    UpdateJokeType();
   }
 
   const UpdateJokeType = () => {
-   
     const jokeType = {
       type,
     };
 
     //Posting data to MySQL
     axios
-      .post("https://localhost:3002/joke/postJokeType", jokeType)
+      .post(
+        "https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/postJokeType",
+        jokeType
+      )
       .then((res) => {
         alert("New Joke Type is saved to mongoDB!!");
       })
@@ -65,11 +68,11 @@ function EditJoke() {
       });
   };
 
-  
-
   const getJokeTypes = async () => {
     await axios
-      .get("https://localhost:3001/joke/getAllType")
+      .get(
+        "https://jokegenerater-deliverservice.centralindia.cloudapp.azure.com:3001/joke/getAllType"
+      )
       .then((res) => {
         setTypes(res.data);
       })
@@ -84,7 +87,7 @@ function EditJoke() {
 
   const handleBack = () => {
     navigate("/moderatejoke");
-  }
+  };
   return (
     <div>
       <div className="flex flex-col bg-gray-50 items-center min-h-screen pt-6 sm:justify-center sm:pt-0">
@@ -95,7 +98,10 @@ function EditJoke() {
             </h1>
             <form>
               <div>
-                <label className="dark:text-white text-md font-semibold mb-2"> Edit Joke</label>
+                <label className="dark:text-white text-md font-semibold mb-2">
+                  {" "}
+                  Edit Joke
+                </label>
                 <input
                   value={joke}
                   className="bg-gray-50 border border-gray-300 mb-2 text-gray-900 sm:text-sm rounded-lg  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
@@ -103,7 +109,9 @@ function EditJoke() {
                     setJoke(e.target.value);
                   }}
                 />
-                <label className=" mb-2 text-md font-semibold dark:text-white">Edit Type</label>
+                <label className=" mb-2 text-md font-semibold dark:text-white">
+                  Edit Type
+                </label>
 
                 <select
                   value={type}
@@ -113,13 +121,16 @@ function EditJoke() {
                   id="countries"
                   className="bg-gray-50 border mb-2 border-gray-300 text-gray-900 sm:text-sm rounded-lg  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
                 >
-                  {types.map((data) => (
+                  {selectType.map((data) => (
                     <option key={data.idjokeTypes}>{data.type}</option>
                   ))}
                 </select>
-                <label  className=" mb-2 text-md font-semibold dark:text-white"> Add New Joke Type</label>
+                <label className=" mb-2 text-md font-semibold dark:text-white">
+                  {" "}
+                  Add New Joke Type
+                </label>
                 <input
-                  className="bg-gray-50 border border-gray-300 mb-2 text-gray-900 sm:text-lg rounded-lg  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+                  className="bg-gray-50 border border-gray-300 mb-2 text-gray-900 sm:text-sm rounded-lg  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
                   onChange={(e) => {
                     setType(e.target.value);
                   }}

@@ -10,7 +10,9 @@ function ModeratedList() {
   useEffect(() => {
     const getJokes = async () => {
       await axios
-        .get("https://localhost:3002/joke/getAll")
+        .get(
+          "https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/getAll"
+        )
         .then((res) => {
           setJokes(res.data.reverse());
         })
@@ -23,7 +25,9 @@ function ModeratedList() {
 
   const deleteJoke = async (id) => {
     await axios
-      .delete(`https://localhost:3002/joke/delete/${id}`)
+      .delete(
+        `https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/delete/${id}`
+      )
       .then(console.log("deleted"));
 
     window.location.reload();

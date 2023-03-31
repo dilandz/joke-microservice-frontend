@@ -14,10 +14,12 @@ function Login() {
       email: email,
       password: password,
     };
-    console.log(loginDetail);
 
     await axios
-      .post("https://localhost:3002/joke/adminLogin", loginDetail)
+      .post(
+        "https://jokegenerate-moderateservice.gghtcwgvc5c6gtdv.centralindia.azurecontainer.io:3002/joke/adminLogin",
+        loginDetail
+      )
       .then((res) => {
         const { token } = res.data;
         localStorage.setItem("token", token);
@@ -25,7 +27,6 @@ function Login() {
         navigate("/moderatejoke");
       })
       .catch((err) => {
-        console.log(err);
         alert("Please check email and password");
       });
   };

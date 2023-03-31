@@ -8,18 +8,18 @@ function DeliverJoke() {
   const selectType = ["", ...types];
 
   const getJoke = async () => {
-    console.log(typeSearch);
-
+    
+    
     await axios
-      .get("https://localhost:3001/joke/getRandom", {
+      .get("https://jokegenerater-deliverservice.centralindia.cloudapp.azure.com:3001/joke/getRandom", {
         params: {
           type: typeSearch,
         }
       })
       .then((res) => {
         setJoke(res.data);
-        console.log(res.data);
-        console.log("axios call working");
+
+  
       })
       .catch((err) => {
         alert(err.message);
@@ -28,7 +28,7 @@ function DeliverJoke() {
 
   const getJokeTypes = async () => {
     await axios
-      .get("https://localhost:3001/joke/getAllType")
+      .get("https://jokegenerater-deliverservice.centralindia.cloudapp.azure.com:3001/joke/getAllType")
       .then((res) => {
         setTypes(res.data);
       })
